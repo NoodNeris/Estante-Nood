@@ -1,18 +1,17 @@
 // =================================================================
-//        
+//        CONFIGURAÇÃO DO SEU FIREBASE
 // =================================================================
 const firebaseConfig = {
   apiKey: "AIzaSyDm5zTPU_paYGTRPK6ynatFN9RzxY0Aey8",
   authDomain: "estante-nood.firebaseapp.com",
   projectId: "estante-nood",
-  storageBucket: "estante-nood.appspot.com", // Corrigido para o formato padrão
+  storageBucket: "estante-nood.appspot.com",
   messagingSenderId: "578043131348",
   appId: "1:578043131348:web:fec4056a6140723f705241"
 };
 
 // =================================================================
-//         
-//         
+//         O RESTO DO CÓDIGO FAZ A MÁGICA ACONTECER
 // =================================================================
 
 // Inicializar o Firebase 
@@ -54,14 +53,6 @@ auth.onAuthStateChanged(user => {
         userInfo.classList.add('hidden');
         adminControls.classList.add('hidden');
         carregarItens(); // Carrega os itens em modo "visitante"
-// --- LÓGICA DE AUTENTICAÇÃO ---
-auth.onAuthStateChanged(user => {
-    currentUser = user;
-    if (user) {
-        console.log('SEU UID SECRETO É:', user.uid); // <--- ADICIONE ESTA LINHA
-        // Usuário está logado
-        loginBtn.classList.add('hidden');
-        //... resto do código ...
     }
 });
 
@@ -112,8 +103,6 @@ cancelBtn.addEventListener('click', fecharModal);
 
 
 // --- LÓGICA DO BANCO DE DADOS (CRUD: Create, Read, Update, Delete) ---
-
-// 1. READ (Ler e exibir os itens)
 function carregarItens() {
     db.collection("itens").orderBy("titulo").onSnapshot(snapshot => {
         listaLivros.innerHTML = '';
@@ -128,7 +117,6 @@ function carregarItens() {
             }
         });
 
-        // Adiciona o evento de clique nos ícones de edição
         document.querySelectorAll('.edit-icon').forEach(icon => {
             icon.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -148,23 +136,13 @@ function carregarItens() {
 function criarCard(item) {
     const notaValor = parseFloat(item.nota) || 0;
     let notaEstrelas = '';
-    
     const fullStars = Math.floor(notaValor);
     const hasHalfStar = notaValor % 1 !== 0;
     
-    // Adiciona estrelas cheias
-    for (let i = 0; i < fullStars; i++) {
-        notaEstrelas += '⭐';
-    }
-    // Adiciona a meia estrela se houver
-    if (hasHalfStar) {
-        notaEstrelas += '✨'; // Usando um emoji diferente para a meia estrela
-    }
-    // Adiciona estrelas vazias
+    for (let i = 0; i < fullStars; i++) { notaEstrelas += '⭐'; }
+    if (hasHalfStar) { notaEstrelas += '✨'; }
     const emptyStars = 5 - Math.ceil(notaValor);
-    for (let i = 0; i < emptyStars; i++) {
-        notaEstrelas += '☆';
-    }
+    for (let i = 0; i < emptyStars; i++) { notaEstrelas += '☆'; }
 
     const editIcon = currentUser ? `<div class="edit-icon" data-id="${item.id}">✏️</div>` : '';
 
@@ -182,9 +160,12 @@ function criarCard(item) {
     `;
 }
 
-// 2. CREATE / UPDATE (Salvar no formulário)
 itemForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    if (!currentUser) {
+        alert("Você precisa estar logado para salvar itens.");
+        return;
+    }
     const id = document.getElementById('item-id').value;
     const itemData = {
         tipo: document.getElementById('item-tipo').value,
@@ -198,19 +179,16 @@ itemForm.addEventListener('submit', (e) => {
     };
 
     if (id) {
-        // Atualizar item existente
         db.collection("itens").doc(id).update(itemData)
             .then(() => fecharModal())
             .catch(err => console.error("Erro ao atualizar: ", err));
     } else {
-        // Adicionar novo item
         db.collection("itens").add(itemData)
             .then(() => fecharModal())
             .catch(err => console.error("Erro ao adicionar: ", err));
     }
 });
 
-// 3. DELETE (Deletar no formulário)
 deleteBtn.addEventListener('click', () => {
     const id = document.getElementById('item-id').value;
     if (confirm("Tem certeza que deseja deletar este item? Esta ação não pode ser desfeita.")) {
