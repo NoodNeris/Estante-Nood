@@ -29,10 +29,9 @@ const adminControls = document.getElementById('admin-controls');
 const addItemBtn = document.getElementById('add-item-btn');
 const listaLivros = document.getElementById('lista-livros');
 const listaJogos = document.getElementById('lista-jogos');
-// Modal de Edição
+// Modais
 const itemModal = document.getElementById('item-modal');
 const itemForm = document.getElementById('item-form');
-// Elementos do Modal de Detalhes
 const detailsModal = document.getElementById('details-modal');
 const detailsCloseBtn = document.getElementById('details-close-btn');
 
@@ -41,15 +40,16 @@ let currentUser = null;
 // --- LÓGICA DE AUTENTICAÇÃO ---
 auth.onAuthStateChanged(user => {
     currentUser = user;
+    const adminControlsElem = document.getElementById('admin-controls');
     if (user) {
-        loginBtn.classList.add('hidden');
-        userInfo.classList.remove('hidden');
-        adminControls.classList.remove('hidden');
+        loginBtn.style.display = 'none';
+        userInfo.style.display = 'flex';
+        adminControlsElem.style.display = 'block';
         userEmail.textContent = user.email;
     } else {
-        loginBtn.classList.remove('hidden');
-        userInfo.classList.add('hidden');
-        adminControls.classList.add('hidden');
+        loginBtn.style.display = 'block';
+        userInfo.style.display = 'none';
+        adminControlsElem.style.display = 'none';
     }
     carregarItens();
 });
@@ -67,17 +67,13 @@ logoutBtn.addEventListener('click', () => {
 });
 
 // --- LÓGICA DOS MODAIS (CORRIGIDA) ---
-function showModal(modalElement) {
-    modalElement.classList.remove('hidden');
-    // Adicionamos o display flex via JS para garantir que funcione
-    modalElement.style.display = 'flex'; 
+function abrirModal(modalElement) {
+    modalElement.style.display = 'flex';
 }
 
-function hideModal(modalElement) {
-    modalElement.classList.add('hidden');
+function fecharModal(modalElement) {
     modalElement.style.display = 'none';
 }
-
 
 // --- LÓGICA DO MODAL DE EDIÇÃO ---
 function abrirModalEdicao(item = null) {
@@ -93,21 +89,17 @@ function abrirModalEdicao(item = null) {
         document.getElementById('item-status').value = item.status;
         document.getElementById('item-nota').value = item.nota;
         document.getElementById('item-review').value = item.review;
-        document.getElementById('delete-btn').classList.remove('hidden');
+        document.getElementById('delete-btn').style.display = 'inline-block';
     } else {
         document.getElementById('modal-title').textContent = "Adicionar Novo Item";
         document.getElementById('item-id').value = '';
-        document.getElementById('delete-btn').classList.add('hidden');
+        document.getElementById('delete-btn').style.display = 'none';
     }
-    showModal(itemModal);
-}
-
-function fecharModalEdicao() {
-    hideModal(itemModal);
+    abrirModal(itemModal);
 }
 
 addItemBtn.addEventListener('click', () => abrirModalEdicao());
-document.getElementById('cancel-btn').addEventListener('click', fecharModalEdicao);
+document.getElementById('cancel-btn').addEventListener('click', () => fecharModal(itemModal));
 
 // --- LÓGICA DO MODAL DE DETALHES ---
 function formatarEstrelas(nota) {
@@ -130,14 +122,10 @@ function abrirModalDetalhes(item) {
     document.getElementById('details-nota').innerHTML = formatarEstrelas(item.nota);
     document.getElementById('details-genero').textContent = `Gênero(s): ${item.genero || 'Não informado'}`;
     document.getElementById('details-review').textContent = item.review || 'Nenhuma review foi escrita para este item.';
-    showModal(detailsModal);
+    abrirModal(detailsModal);
 }
 
-function fecharModalDetalhes() {
-    hideModal(detailsModal);
-}
-
-detailsCloseBtn.addEventListener('click', fecharModalDetalhes);
+detailsCloseBtn.addEventListener('click', () => fecharModal(detailsModal));
 
 // --- LÓGICA DO BANCO DE DADOS (CRUD) ---
 function carregarItens() {
@@ -205,16 +193,16 @@ itemForm.addEventListener('submit', (e) => {
     };
 
     if (id) {
-        db.collection("itens").doc(id).update(itemData).then(fecharModalEdicao);
+        db.collection("itens").doc(id).update(itemData).then(() => fecharModal(itemModal));
     } else {
-        db.collection("itens").add(itemData).then(fecharModalEdicao);
+        db.collection("itens").add(itemData).then(() => fecharModal(itemModal));
     }
 });
 
 document.getElementById('delete-btn').addEventListener('click', () => {
     const id = document.getElementById('item-id').value;
     if (confirm("Tem certeza que deseja deletar este item?")) {
-        db.collection("itens").doc(id).delete().then(fecharModalEdicao);
+        db.collection("itens").doc(id).delete().then(() => fecharModal(itemModal));
     }
 });
 
