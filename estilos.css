@@ -12,7 +12,7 @@ body {
 header {
     background-color: #212121;
     color: #fff;
-    padding: 15px 20px;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -28,7 +28,6 @@ nav {
     font-size: 2em;
     font-weight: 700;
     margin: 0;
-    margin-right: 20px;
 }
 
 #auth-container {
@@ -177,24 +176,20 @@ h2 {
     opacity: 1;
 }
 
+/* ESTA É A CORREÇÃO PRINCIPAL NO CSS */
 .modal-container {
+    display: none; /* Por padrão, o modal é invisível */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    /* display: flex; FOI REMOVIDO DAQUI */
     align-items: center;
     justify-content: center;
     z-index: 1000;
     overflow-y: auto;
     padding: 20px;
-}
-
-/* A CLASSE .hidden AGORA CONTROLA TUDO */
-.hidden {
-    display: none !important;
 }
 
 .modal-content, .modal-details {
@@ -261,10 +256,8 @@ h2 {
     background-color: #f44336;
 }
 
-/* Estilos do Modal de Detalhes */
 .modal-details {
     max-width: 800px;
-    display: block; /* MUDANÇA AQUI */
 }
 
 .modal-details img {
@@ -309,7 +302,7 @@ h2 {
 .modal-details p {
     color: #ccc;
     line-height: 1.7;
-    white-space: pre-line; 
+    white-space: pre-line;
 }
 
 .close-button {
