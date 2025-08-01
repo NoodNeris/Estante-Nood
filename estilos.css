@@ -176,9 +176,8 @@ h2 {
     opacity: 1;
 }
 
-/* ESTA É A CORREÇÃO PRINCIPAL NO CSS */
 .modal-container {
-    display: none; /* Por padrão, o modal é invisível */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -192,7 +191,7 @@ h2 {
     padding: 20px;
 }
 
-.modal-content, .modal-details {
+.modal-content {
     background: #333;
     padding: 30px;
     border-radius: 8px;
@@ -256,66 +255,76 @@ h2 {
     background-color: #f44336;
 }
 
+/* --- ESTILOS CORRIGIDOS PARA O MODAL DE DETALHES --- */
 .modal-details {
-    max-width: 800px;
+    display: flex; /* CORREÇÃO: Devolvendo o layout lado-a-lado */
+    background: #1e1e1e;
+    width: 90%;
+    max-width: 900px;
+    max-height: 90vh;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.7);
+    overflow: hidden;
+    position: relative;
 }
 
 .modal-details img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: contain;
-    margin-bottom: 20px;
-    border-radius: 5px;
+    flex-shrink: 0; /* CORREÇÃO: Impede a imagem de encolher */
+    width: 300px;   /* CORREÇÃO: Define um tamanho fixo para a imagem */
+    object-fit: cover;
 }
 
-.modal-details h2 {
-    color: #eee;
+.details-info {
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.details-info h2 {
+    margin: 0;
+    color: #fff;
     font-size: 2em;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #555;
-    padding-bottom: 10px;
+    border: none;
+}
+
+.details-info h3 {
+    color: #bb86fc;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.details-info p {
+    color: #ccc;
+    line-height: 1.6;
+    white-space: pre-line;
 }
 
 .details-meta {
     display: flex;
-    gap: 20px;
     align-items: center;
-    margin-bottom: 15px;
+    gap: 20px;
+    margin: 15px 0;
 }
 
 .details-meta .status {
-    background-color: #64dd17;
-    color: #212121;
+    margin-top: 0;
 }
 
 .details-meta .nota {
-    color: #ffc107;
     font-size: 1.5em;
-}
-
-.modal-details h3 {
-    color: #bb86fc;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-.modal-details p {
-    color: #ccc;
-    line-height: 1.7;
-    white-space: pre-line;
+    color: #fdd835;
 }
 
 .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(0, 0, 0, 0.5);
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.5);
     color: #fff;
     border: none;
     border-radius: 50%;
     width: 35px;
     height: 35px;
-    font-size: 1em;
+    font-size: 1.2em;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -337,13 +346,16 @@ footer {
     margin-top: 40px;
 }
 
+/* CORREÇÃO: Restaurando o layout de coluna para telas pequenas */
 @media (max-width: 768px) {
     .modal-details {
         flex-direction: column;
+        max-height: none; /* Permite crescer na vertical */
+        height: auto;
     }
     .modal-details img {
-        max-height: none;
-        height: auto;
-        margin-bottom: 15px;
+        width: 100%;
+        height: 350px; /* Altura fixa para a imagem no mobile */
+        flex-shrink: 1;
     }
 }
