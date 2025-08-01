@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estante Virtual do Nood</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <header>
+        <h1>Estante Virtual do Nood</h1>
+        <div id="auth-container">
+            <button id="login-btn">Login com Google</button>
+            <div id="user-info" class="hidden">
+                <span id="user-email"></span>
+                <button id="logout-btn">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="controls hidden" id="admin-controls">
+            <button id="add-item-btn">Adicionar Novo Item</button>
+        </div>
+
+        <section id="livros">
+            <h2>📚 Livros</h2>
+            <div id="lista-livros" class="grid-midia">
+                </div>
+        </section>
+
+        <section id="jogos">
+            <h2>🎮 Jogos</h2>
+            <div id="lista-jogos" class="grid-midia">
+                </div>
+        </section>
+    </main>
+
+    <div id="item-modal" class="modal-container hidden">
+        <div class="modal-content">
+            <h3 id="modal-title">Adicionar Novo Item</h3>
+            <form id="item-form">
+                <input type="hidden" id="item-id">
+                <select id="item-tipo" required>
+                    <option value="livro">Livro</option>
+                    <option value="jogo">Jogo</option>
+                </select>
+                <input type="text" id="item-titulo" placeholder="Título" required>
+                <input type="text" id="item-autor-plataforma" placeholder="Autor ou Plataforma" required>
+                <input type="text" id="item-genero" placeholder="Gênero(s) (separado por vírgula)">
+                <input type="url" id="item-imagem" placeholder="URL da Imagem da Capa" required>
+                <select id="item-status" required>
+                    <option value="Lido">Lido</option>
+                    <option value="Lendo">Lendo</option>
+                    <option value="Quero Ler">Quero Ler</option>
+                    <option value="Finalizado">Finalizado</option>
+                    <option value="Jogando">Jogando</option>
+                    <option value="Quero Jogar">Quero Jogar</option>
+                </select>
+                <select id="item-nota" required>
+                    <option value="0">Sem Nota</option>
+                    <option value="1">⭐</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
+                <textarea id="item-review" placeholder="Sua review sobre a obra..."></textarea>
+                <div class="form-buttons">
+                    <button type="submit">Salvar</button>
+                    <button type="button" id="cancel-btn">Cancelar</button>
+                    <button type="button" id="delete-btn" class="hidden">Deletar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Feito com ❤️ por Nood</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
