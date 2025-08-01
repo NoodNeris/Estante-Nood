@@ -32,7 +32,7 @@ const listaJogos = document.getElementById('lista-jogos');
 // Modal de Edição
 const itemModal = document.getElementById('item-modal');
 const itemForm = document.getElementById('item-form');
-// NOVO: Elementos do Modal de Detalhes
+// Elementos do Modal de Detalhes
 const detailsModal = document.getElementById('details-modal');
 const detailsCloseBtn = document.getElementById('details-close-btn');
 
@@ -96,7 +96,7 @@ function fecharModalEdicao() {
 addItemBtn.addEventListener('click', () => abrirModalEdicao());
 document.getElementById('cancel-btn').addEventListener('click', fecharModalEdicao);
 
-// --- NOVO: LÓGICA DO MODAL DE DETALHES ---
+// --- LÓGICA DO MODAL DE DETALHES ---
 function formatarEstrelas(nota) {
     const notaValor = parseFloat(nota) || 0;
     let notaEstrelas = '';
