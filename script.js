@@ -138,9 +138,26 @@ function carregarItens() {
 }
 
 function criarCard(item) {
-    // Evita erro se a nota for indefinida ou nula
-    const notaValor = parseInt(item.nota) || 0;
-    const notaEstrelas = '⭐'.repeat(notaValor) + '☆'.repeat(5 - notaValor);
+    const notaValor = parseFloat(item.nota) || 0;
+    let notaEstrelas = '';
+    
+    const fullStars = Math.floor(notaValor);
+    const hasHalfStar = notaValor % 1 !== 0;
+    
+    // Adiciona estrelas cheias
+    for (let i = 0; i < fullStars; i++) {
+        notaEstrelas += '⭐';
+    }
+    // Adiciona a meia estrela se houver
+    if (hasHalfStar) {
+        notaEstrelas += '✨'; // Usando um emoji diferente para a meia estrela
+    }
+    // Adiciona estrelas vazias
+    const emptyStars = 5 - Math.ceil(notaValor);
+    for (let i = 0; i < emptyStars; i++) {
+        notaEstrelas += '☆';
+    }
+
     const editIcon = currentUser ? `<div class="edit-icon" data-id="${item.id}">✏️</div>` : '';
 
     return `
