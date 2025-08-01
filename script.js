@@ -66,6 +66,19 @@ logoutBtn.addEventListener('click', () => {
     auth.signOut();
 });
 
+// --- LÓGICA DOS MODAIS (CORRIGIDA) ---
+function showModal(modalElement) {
+    modalElement.classList.remove('hidden');
+    // Adicionamos o display flex via JS para garantir que funcione
+    modalElement.style.display = 'flex'; 
+}
+
+function hideModal(modalElement) {
+    modalElement.classList.add('hidden');
+    modalElement.style.display = 'none';
+}
+
+
 // --- LÓGICA DO MODAL DE EDIÇÃO ---
 function abrirModalEdicao(item = null) {
     itemForm.reset();
@@ -86,11 +99,11 @@ function abrirModalEdicao(item = null) {
         document.getElementById('item-id').value = '';
         document.getElementById('delete-btn').classList.add('hidden');
     }
-    itemModal.classList.remove('hidden');
+    showModal(itemModal);
 }
 
 function fecharModalEdicao() {
-    itemModal.classList.add('hidden');
+    hideModal(itemModal);
 }
 
 addItemBtn.addEventListener('click', () => abrirModalEdicao());
@@ -117,11 +130,11 @@ function abrirModalDetalhes(item) {
     document.getElementById('details-nota').innerHTML = formatarEstrelas(item.nota);
     document.getElementById('details-genero').textContent = `Gênero(s): ${item.genero || 'Não informado'}`;
     document.getElementById('details-review').textContent = item.review || 'Nenhuma review foi escrita para este item.';
-    detailsModal.classList.remove('hidden');
+    showModal(detailsModal);
 }
 
 function fecharModalDetalhes() {
-    detailsModal.classList.add('hidden');
+    hideModal(detailsModal);
 }
 
 detailsCloseBtn.addEventListener('click', fecharModalDetalhes);
@@ -133,19 +146,18 @@ function carregarItens() {
         listaJogos.innerHTML = '';
         snapshot.forEach(doc => {
             const item = { ...doc.data(), id: doc.id };
-            const cardElement = document.createElement('div');
-            cardElement.innerHTML = criarCardHtml(item);
+            const cardWrapper = document.createElement('div');
+            cardWrapper.innerHTML = criarCardHtml(item);
+            const cardElement = cardWrapper.firstElementChild;
             
-            // Adiciona evento para abrir detalhes ao clicar no card
-            cardElement.firstElementChild.addEventListener('click', () => {
+            cardElement.addEventListener('click', () => {
                 abrirModalDetalhes(item);
             });
 
-            // Adiciona evento para abrir edição ao clicar no ícone (se logado)
             const editIcon = cardElement.querySelector('.edit-icon');
             if (editIcon) {
                 editIcon.addEventListener('click', (e) => {
-                    e.stopPropagation(); // Impede que o modal de detalhes abra também
+                    e.stopPropagation(); 
                     abrirModalEdicao(item);
                 });
             }
