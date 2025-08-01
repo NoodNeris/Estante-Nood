@@ -1,21 +1,21 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
+// =================================================================
+//        
+// =================================================================
 const firebaseConfig = {
   apiKey: "AIzaSyDm5zTPU_paYGTRPK6ynatFN9RzxY0Aey8",
   authDomain: "estante-nood.firebaseapp.com",
   projectId: "estante-nood",
-  storageBucket: "estante-nood.firebasestorage.app",
+  storageBucket: "estante-nood.appspot.com", // Corrigido para o formato padrão
   messagingSenderId: "578043131348",
   appId: "1:578043131348:web:fec4056a6140723f705241"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// Inicializar o Firebase
+// =================================================================
+//         
+//         
+// =================================================================
+
+// Inicializar o Firebase 
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const auth = firebase.auth();
@@ -59,7 +59,10 @@ auth.onAuthStateChanged(user => {
 
 loginBtn.addEventListener('click', () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider);
+    auth.signInWithPopup(provider).catch(error => {
+        console.error("Erro no login com Google:", error);
+        alert("Não foi possível fazer o login. Verifique se os pop-ups estão ativados no seu navegador e tente novamente. Detalhes do erro no console (F12).");
+    });
 });
 
 logoutBtn.addEventListener('click', () => {
@@ -127,11 +130,17 @@ function carregarItens() {
                 });
             });
         });
+    }, error => {
+        console.error("Erro ao carregar itens do Firestore: ", error);
+        listaLivros.innerHTML = '<p style="color: #cf6679;">Erro ao carregar os itens. Verifique as regras do Firestore e a configuração do projeto.</p>';
+        listaJogos.innerHTML = '';
     });
 }
 
 function criarCard(item) {
-    const notaEstrelas = '⭐'.repeat(parseInt(item.nota)) + '☆'.repeat(5 - parseInt(item.nota));
+    // Evita erro se a nota for indefinida ou nula
+    const notaValor = parseInt(item.nota) || 0;
+    const notaEstrelas = '⭐'.repeat(notaValor) + '☆'.repeat(5 - notaValor);
     const editIcon = currentUser ? `<div class="edit-icon" data-id="${item.id}">✏️</div>` : '';
 
     return `
@@ -141,7 +150,7 @@ function criarCard(item) {
             <div class="info">
                 <h3>${item.titulo}</h3>
                 <p>${item.autor_plataforma}</p>
-                <p class="nota" title="${item.nota} de 5 estrelas">${notaEstrelas}</p>
+                <p class="nota" title="${notaValor} de 5 estrelas">${notaEstrelas}</p>
                 <span class="status">${item.status}</span>
             </div>
         </div>
