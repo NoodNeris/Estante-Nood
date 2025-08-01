@@ -5,19 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estante Virtual do Nood</title>
     <link rel="stylesheet" href="estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <header>
-        <div class="header-placeholder"></div>
         <h1 class="header-title">Nood</h1>
-        <div id="auth-container">
-            <button id="login-btn">Login com Google</button>
-            <div id="user-info" class="hidden">
-                <span id="user-email"></span>
-                <button id="logout-btn">Sair</button>
+        <nav>
+            <div id="auth-container">
+                <button id="login-btn">Login</button>
+                <div id="user-info" class="hidden">
+                    <span id="user-email"></span>
+                    <button id="logout-btn">Sair</button>
+                </div>
             </div>
-        </div>
+        </nav>
     </header>
 
     <main>
