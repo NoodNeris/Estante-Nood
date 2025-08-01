@@ -54,6 +54,14 @@ auth.onAuthStateChanged(user => {
         userInfo.classList.add('hidden');
         adminControls.classList.add('hidden');
         carregarItens(); // Carrega os itens em modo "visitante"
+// --- LÓGICA DE AUTENTICAÇÃO ---
+auth.onAuthStateChanged(user => {
+    currentUser = user;
+    if (user) {
+        console.log('SEU UID SECRETO É:', user.uid); // <--- ADICIONE ESTA LINHA
+        // Usuário está logado
+        loginBtn.classList.add('hidden');
+        //... resto do código ...
     }
 });
 
