@@ -9,16 +9,16 @@
 <body>
 
     <header>
-    <div class="header-placeholder"></div>
-    <h1 class="header-title">Nood</h1>
-    <div id="auth-container">
-        <button id="login-btn">Login com Google</button>
-        <div id="user-info" class="hidden">
-            <span id="user-email"></span>
-            <button id="logout-btn">Sair</button>
+        <div class="header-placeholder"></div>
+        <h1 class="header-title">Nood</h1>
+        <div id="auth-container">
+            <button id="login-btn">Login com Google</button>
+            <div id="user-info" class="hidden">
+                <span id="user-email"></span>
+                <button id="logout-btn">Sair</button>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
     <main>
         <div class="controls hidden" id="admin-controls">
@@ -60,18 +60,18 @@
                     <option value="Quero Jogar">Quero Jogar</option>
                 </select>
                 <select id="item-nota" required>
-    <option value="0">Sem Nota</option>
-    <option value="0.5">½</option>
-    <option value="1">⭐</option>
-    <option value="1.5">⭐½</option>
-    <option value="2">⭐⭐</option>
-    <option value="2.5">⭐⭐½</option>
-    <option value="3">⭐⭐⭐</option>
-    <option value="3.5">⭐⭐⭐½</option>
-    <option value="4">⭐⭐⭐⭐</option>
-    <option value="4.5">⭐⭐⭐⭐½</option>
-    <option value="5">⭐⭐⭐⭐⭐</option>
-</select>
+                    <option value="0">Sem Nota</option>
+                    <option value="0.5">½</option>
+                    <option value="1">⭐</option>
+                    <option value="1.5">⭐½</option>
+                    <option value="2">⭐⭐</option>
+                    <option value="2.5">⭐⭐½</option>
+                    <option value="3">⭐⭐⭐</option>
+                    <option value="3.5">⭐⭐⭐½</option>
+                    <option value="4">⭐⭐⭐⭐</option>
+                    <option value="4.5">⭐⭐⭐⭐½</option>
+                    <option value="5">⭐⭐⭐⭐⭐</option>
+                </select>
                 <textarea id="item-review" placeholder="Sua review sobre a obra..."></textarea>
                 <div class="form-buttons">
                     <button type="submit">Salvar</button>
@@ -79,6 +79,25 @@
                     <button type="button" id="delete-btn" class="hidden">Deletar</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <div id="details-modal" class="modal-container hidden">
+        <div class="modal-details">
+            <button id="details-close-btn" class="close-button">X</button>
+            <img id="details-img" src="" alt="Capa">
+            <div class="details-info">
+                <h2 id="details-title"></h2>
+                <p id="details-author"></p>
+                <div class="details-meta">
+                    <span id="details-status" class="status"></span>
+                    <span id="details-nota" class="nota"></span>
+                </div>
+                <p id="details-genero"></p>
+                <hr>
+                <h3>Review</h3>
+                <p id="details-review"></p>
+            </div>
         </div>
     </div>
 
