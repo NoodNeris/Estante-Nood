@@ -38,3 +38,29 @@ button:hover { background-color: #a362f7; }
 .form-buttons { display: flex; gap: 10px; justify-content: flex-end; margin-top: 10px; }
 #delete-btn { background-color: #cf6679; }
 #delete-btn:hover { background-color: #b00020; }
+/* Novos estilos para o Cabeçalho */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.header-title {
+    color: #ffffff;
+    font-size: 2.5em; /* Aumenta um pouco o nome */
+    font-weight: bold;
+    flex-grow: 1; /* Faz o título ocupar o espaço central */
+    text-align: center; /* Centraliza o texto dentro do espaço */
+}
+
+/* O placeholder e o container de auth devem ter o mesmo tamanho (flex-basis) para a mágica acontecer */
+#auth-container {
+    flex-basis: 200px; /* Define uma largura base */
+    display: flex;
+    justify-content: flex-end; /* Alinha o conteúdo à direita */
+}
+
+.header-placeholder {
+    flex-basis: 200px; /* Define a mesma largura base para empurrar o título para o centro */
+}
